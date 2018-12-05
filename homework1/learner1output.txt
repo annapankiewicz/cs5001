@@ -1,0 +1,14 @@
+CS5001: HW#1
+Programmer: Anna Pankiewicz
+
+TRAINING
+Using random seed = 728566148750251766
+Using learning rate eta = 0.0001
+After 5000 iterations:
+Weights:
+w0 = 31.22613742347904
+
+w1 = 2.226137423479033
+
+VALIDATION
+Sum-of-Squares Error: 182.99610009782336
