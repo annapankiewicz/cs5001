@@ -6,12 +6,21 @@
 #ifndef VALUE_ITERATION
 #define VALUE_ITERATION
 
+enum Action {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+};
+
+// Tile struct
 struct Tile {
-    bool valid;
     std::string title;
     int reward;
 };
 
 void fill_map(Tile** &map);
+
+void prob(float* up, float* right, float* down, float* left, int action);
 
 #endif
