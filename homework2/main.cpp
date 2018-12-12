@@ -4,8 +4,8 @@
 #include <iostream>
 #include "value_iteration.h"
 
-const float GAMMA = 0.8;        // discount rate
-const int START[2] = {1, 1};    // arbitrary starting position
+const float GAMMA = 0.8;              // discount rate
+const int START[2] = {1, 1};          // arbitrary starting position
 
 int main()
 {
@@ -16,10 +16,9 @@ int main()
 
     // Initialize variables
     int iterations;
-    float q_table[10][10][4];       // Q(s,a) table
-    float q_prime[10][10][4];       // Q prime table
-    std::string policy[10][10];     // final policy table
-
+    float q_table[10][10][4] = {0};       // Q(s,a) table
+    float q_prime[10][10][4] = {0};       // Q prime table
+    std::string policy[10][10];           // final policy table
 
     std::cout << "Enter number of iterations:" << std::endl;
     std::cin >> iterations;

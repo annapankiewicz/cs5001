@@ -85,3 +85,29 @@ void prob(float* up, float* right, float* down, float* left, int action)
         return;
     }
 }
+
+float value(int x, int y, float ***q_table, std::string *policy)
+{
+    float max_value = 0.0;
+    if(q_table[y][x][UP] > max_value)
+    {
+        max_value = q_table[y][x][UP];
+        policy[y][x] = '^';
+    }
+    if(q_table[y][x][RIGHT] > max_value)
+    {
+        max_value = q_table[y][x][RIGHT];
+        policy[y][x] = '>';
+    }
+    if(q_table[y][x][DOWN] > max_value)
+    {
+        max_value = q_table[y][x][DOWN];
+        policy[y][x] = 'v';
+    }
+    if(q_table[y][x][LEFT] > max_value)
+    {
+        max_value = q_table[y][x][LEFT];
+        policy[y][x] = '<';
+    }
+    return max_value;
+}

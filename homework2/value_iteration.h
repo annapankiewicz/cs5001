@@ -23,4 +23,6 @@ void fill_map(Tile** &map);
 
 void prob(float* up, float* right, float* down, float* left, int action);
 
+float value(int x, int y, float ***q_table, std::string *policy);
+
 #endif
