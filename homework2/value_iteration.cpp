@@ -111,3 +111,17 @@ float value(int x, int y, float ***q_table, std::string *policy)
     }
     return max_value;
 }
+
+float exp_reward(int x, int y, int action, Tile** map)
+{
+    float reward = 0.0;
+    float *up, *right, *down, *left;
+
+    prob(up, right, down, left, action);
+    reward += (*up * map[y][x+1].reward);
+    reward += (*right * map[y+1][x].reward);
+    reward += (*down * map[y][x-1].reward);
+    reward += (*left * map[y-1][x].reward);
+
+    return reward;
+}
