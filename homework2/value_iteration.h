@@ -23,8 +23,12 @@ void fill_map(Tile** &map);
 
 void prob(float* up, float* right, float* down, float* left, int action);
 
-float value(int x, int y, float ***q_table, std::string *policy);
+float value(int x, int y);
 
 float exp_reward(int x, int y, int action, Tile** map);
+
+void value_iterate(int iterations, Tile** map);
+
+void table_copy(float destination[10][10][4], float source[10][10][4]);
 
 #endif
