@@ -5,9 +5,13 @@
 #include "value_iteration.h"
 
 const float GAMMA = 0.8;              // discount rate
+const std::string bar = "+--------+--------+--------+--------+--------+--------+--------+--------+";
+
 float q_table[10][10][4] = {0};       // Q(s,a) table
 float q_prime[10][10][4] = {0};       // Q prime table
+float values[10][10] = {0};           // intermediate values table
 std::string policy[10][10];           // final policy table
+
 
 int main()
 {
@@ -17,10 +21,8 @@ int main()
 	<< "Discount Gamma = " <<  GAMMA << std::endl;
 
     // Initialize variables
-    int iterations;
-
-    std::cout << "Enter number of iterations:" << std::endl;
-    std::cin >> iterations;
+    int iterations = 0;
+    int count = 0;
 
     // Create map
     Tile** map = new Tile*[10];
@@ -37,7 +39,21 @@ int main()
             std::cout<<map[i][j].title<<" ";
         std::cout<<std::endl;
     }
-    
+
+    do
+    {
+        std::cout << "Enter number of iterations:" << std::endl;
+        std::cin >> iterations;
+
+        value_iterate(iterations, map);
+        count += iterations;
+        std::cout << "Values after " << count << " iterations:" << std::endl;
+        print_table(values);
+    } while(iterations > 0);
+
+    // print final policy
+    print_table(policy);
+
     // Cleanup
     for(int i=0; i<10; i++)
     {
@@ -137,21 +153,25 @@ float value(int x, int y)
     if(q_table[y][x][UP] > max_value)
     {
         max_value = q_table[y][x][UP];
+        values[y][x] = max_value;
         policy[y][x] = '^';
     }
     if(q_table[y][x][RIGHT] > max_value)
     {
         max_value = q_table[y][x][RIGHT];
+        values[y][x] = max_value;
         policy[y][x] = '>';
     }
     if(q_table[y][x][DOWN] > max_value)
     {
         max_value = q_table[y][x][DOWN];
+        values[y][x] = max_value;
         policy[y][x] = 'v';
     }
     if(q_table[y][x][LEFT] > max_value)
     {
         max_value = q_table[y][x][LEFT];
+        values[y][x] = max_value;
         policy[y][x] = '<';
     }
     return max_value;
@@ -191,7 +211,7 @@ void value_iterate(int iterations, Tile** map)
                     temp_value += *right * value(x_coord+1, y_coord);
                     temp_value += *down * value(x_coord, y_coord-1);
                     temp_value += *left * value(x_coord-1, y_coord);
-                    q_prime[y_coord][x_coord][action] = exp_reward(x_coord, y_coord, action, map);
+                    q_prime[y_coord][x_coord][action] = exp_reward(x_coord, y_coord, action, map) + (GAMMA * temp_value);
                 }
             }
         }
@@ -211,4 +231,32 @@ void table_copy(float destination[10][10][4], float source[10][10][4])
             }
         }
     }
+}
+
+void print_table(float table[10][10])
+{
+    std::cout << bar << std::endl;
+    for(int i = 1; i < 9; i++)
+    {
+        for(int j = 1; j < 9; j++)
+        {
+            std::cout << "| " << policy[j][i] << "";
+        }
+        std::cout << " |";
+    }
+    std::cout << bar << std::endl;
+}
+
+void print_table(std::string table[10][10])
+{
+    std::cout << bar << std::endl;
+    for(int i = 1; i < 9; i++)
+    {
+        for(int j = 1; j < 9; j++)
+        {
+            std::cout << "| " << policy[j][i] << "";
+        }
+        std::cout << " |";
+    }
+    std::cout << bar << std::endl;
 }

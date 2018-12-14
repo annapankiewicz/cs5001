@@ -31,4 +31,8 @@ void value_iterate(int iterations, Tile** map);
 
 void table_copy(float destination[10][10][4], float source[10][10][4]);
 
+void print_table(float table[10][10]);
+
+void print_table(std::string table[10][10]);
+
 #endif
